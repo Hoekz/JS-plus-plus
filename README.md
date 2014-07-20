@@ -10,8 +10,7 @@ In this library, a copy function is included for easy complete copying.
 Class Definitions
 ============
 To write a class definition, use the function Class:
-
-var Class = function(params){...};
+    var Class = function(params){...};
 
 The params variable is an object with up to 4 properties:
 
@@ -20,6 +19,7 @@ private
 init
 inherit
 The suggested syntax is as follows:
+'''js
 var myClass = Class({
   //inherit: someClass,
   init: function(arg1, arg2, arg3){
@@ -34,7 +34,7 @@ var myClass = Class({
     publicVar: "public value"
   }
 });
-
+'''
 The Class function then quite literally writes a javascript-style class where variables (var) are private and variables bound to the function (this.varName) are public.  This means that when referencing a private variable in a function, simply use its name.  If referencing a public variable, you must access it with "this.name".  Inheritance works by taking a class written by the Class function and appending its definition minus its initiator to the new definition.
 
 The JSPP Interface
