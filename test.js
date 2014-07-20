@@ -35,13 +35,13 @@ jspp.Script('test', function(element){
         color: 'white',
         textAlign: 'center'
     })
-    .Element('content','HTML:test.html', function(inner){
+    .Element('content','HTML:test.html', function(el, attr, inner){
         return {
             close: define('closing'),
             content: inner
         };
     })
-    .Element('inner','HTML:inner.html', function(inner){
+    .Element('inner','HTML:inner.html', function(el, attr, inner){
         return {
             content: inner,
             date: (new Date()).toDateString()

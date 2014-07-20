@@ -272,6 +272,10 @@ var jspp = new function(){
         return self;
     };
     self.Element = function(tag, def, template){
+        if(elements[tag]){
+            update(tag);
+            return self;
+        }
         if(def.substr(0,5) == 'HTML:'){
             self.Get(def.substr(5), function(response){
                 elements[tag] = {
@@ -292,11 +296,14 @@ var jspp = new function(){
         var update = function(tag){
             var replace = document.getElementsByTagName(tag);
             if(replace.length > 0){
+                if(!elements[tag].ref){
+                    elements[tag].ref = [];
+                }
                 for(var i = 0; i < replace.length; i++){
                     var e = document.createElement('div');
                     if(elements[tag].template){
                         var temp = elements[tag].def.split("||");
-                        var data = elements[tag].template(replace[i].innerHTML);
+                        var data = elements[tag].template(replace[i], replace[i].attributes, replace[i].innerHTML);
                         var content = "";
                         for(var j = 0; j < temp.length; j++){
                             if(j % 2 == 0){
@@ -311,6 +318,7 @@ var jspp = new function(){
                     }
                     e.id = tag + elements[tag].count++;
                     e.className += " " + tag;
+                    elements[tag].ref.push(e);
                     replace[i].parentNode.replaceChild(e, replace[i]);
                     for(var prop in elements){
                         if(document.getElementsByTagName(prop).length > 0){
@@ -319,7 +327,7 @@ var jspp = new function(){
                     }
                 }
             }
-        }
+        };
         return self;
     };
 }();
